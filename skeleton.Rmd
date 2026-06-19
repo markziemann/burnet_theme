@@ -1,0 +1,93 @@
+---
+title: "Organization Report Template"
+subtitle: "Theme preview"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    theme: !expr source("org_theme.R")$value
+    toc: true
+    toc_float: true
+    df_print: kable
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+source("org_theme.R")
+```
+
+```{r, echo=FALSE}
+htmltools::img(src ="logo.jpg",
+               alt = 'logo',
+               style = 'position:absolute; top:0; right:0; padding:10px;',
+               width = "200px",
+               heigth = "200px")
+```
+
+# Heading One
+
+This is body text demonstrating the base font, color, and link styling —
+[here is a link](https://example.com) to check the link colors.
+
+## Heading Two
+
+> This is a blockquote, styled with the Marigold accent border and a
+> light grey background.
+
+### Heading Three
+
+Inline `code` and a fenced code block:
+
+```r
+summary(mtcars)
+```
+
+## Table
+
+```{r}
+knitr::kable(head(mtcars))
+```
+
+## Chart using the categorical brand palette
+
+```{r,colours}
+
+library("scales")
+show_col(org_palette)
+show_col(org_pal)
+show_col(org_palette_categorical)
+show_col(org_palette_extended)
+show_col(org_palette_sequential_blueberry)
+
+```
+
+```{r}
+library(ggplot2)
+
+ggplot(mpg, aes(class, fill = class)) +
+  geom_bar() +
+  scale_fill_manual(values = org_pal(length(unique(mpg$class)))) +
+  theme_minimal(base_family = "sans") +
+  labs(title = "Vehicles by Class", x = NULL, y = "Count") +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+## Session Information
+
+```{r,sessioninfo}
+
+sessionInfo()
+
+```
+
+## Buttons / callouts (Bootstrap classes)
+
+<button type="button" class="btn btn-primary">Primary</button>
+<button type="button" class="btn btn-secondary">Secondary</button>
+<button type="button" class="btn btn-success">Success</button>
+<button type="button" class="btn btn-info">Info</button>
+<button type="button" class="btn btn-warning">Warning</button>
+<button type="button" class="btn btn-danger">Danger</button>
+<br>
+<hr>
+*I acknowledge the Traditional Custodians of the land on which I live and work, and pay my respects to Elders, past and present.*
